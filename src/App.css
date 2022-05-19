@@ -49,3 +49,10 @@ button{
     border: none;
     font-size: 18px;
 }
+.error{
+    color: red;
+}
+button:disabled{
+    background-color: #ccc;
+    cursor:auto;
+}
