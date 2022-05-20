@@ -8,7 +8,8 @@
       "password": "Fatemeh12#",
       "passwordConfirm": "Fatemeh12#",
       "gender": "1",
-      "nationality":"IR"
+      "nationality":"IR",
+      "intrests": ["React.js"]
     }
   ]
 }

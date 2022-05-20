@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import Input from "./common/Input";
 import RadioInput from "./common/RadioInput";
 import SelectComponent from "./common/SelectComponent";
+import CheckBoxInput from "./common/CheckBoxInput";
 const radioOptions = [
   { label: "male", value: "0" },
   { label: "famale", value: "1" },
@@ -14,6 +15,10 @@ const selectOptions = [
   { label: "Iran", value: "IR" },
   { label: "Germany", value: "GER" },
   { label: "USA", value: "US" },
+];
+const checkBoxOptions = [
+  { label: "React.js", value: "React.js" },
+  { label: "Vue.js", value: "Vue.js" },
 ];
 
 const SignUpForm = () => {
@@ -36,6 +41,7 @@ const SignUpForm = () => {
       passwordConfirm: "",
       gender: "",
       nationality: "",
+      intrests: [],
     },
     onSubmit: (values) => console.log(values),
     validationSchema: Yup.object({
@@ -60,7 +66,7 @@ const SignUpForm = () => {
         .oneOf([Yup.ref("password"), null], "Password must maych"),
       gender: Yup.string().required("gender is required"),
       nationality: Yup.string().required("Select nationality"),
-
+      intrests: Yup.array().min(1).required("at least select one expertise"),
     }),
     validateOnMount: true,
     enableReinitialize: true,
@@ -85,11 +91,17 @@ const SignUpForm = () => {
       />
       <RadioInput formik={formik} radioOptions={radioOptions} name="gender" />
       <SelectComponent
-          selectOptions={selectOptions}
-          formik={formik}
-          name="nationality"
-        />
-        
+        selectOptions={selectOptions}
+        formik={formik}
+        name="nationality"
+      />
+
+      <CheckBoxInput
+        formik={formik}
+        checkBoxOptions={checkBoxOptions}
+        name="intrests"
+      />
+
       <button type="submit" disabled={!formik.isValid}>
         Submit
       </button>
