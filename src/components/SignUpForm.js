@@ -20,7 +20,6 @@ const checkBoxOptions = [
   { label: "React.js", value: "React.js" },
   { label: "Vue.js", value: "Vue.js" },
 ];
-
 const SignUpForm = () => {
   /*  const savedData = {
     name: "fatemeh",
@@ -44,7 +43,13 @@ const SignUpForm = () => {
       intrests: [],
       terms: false,
     },
-    onSubmit: (values) => console.log(values),
+    // onSubmit: (values) => console.log(values),
+    onSubmit: (values) => {
+      axios
+        .post("http://localhost:3001/users", values)
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log(err));
+    },
     validationSchema: Yup.object({
       name: Yup.string()
         .required(" Name is required")
@@ -69,18 +74,18 @@ const SignUpForm = () => {
       intrests: Yup.array().min(1).required("at least select one expertise"),
       nationality: Yup.string().required("Select nationality"),
       terms: Yup.boolean()
-      .required("The terms and conditions must be accepted")
-      .oneOf([true], "The terms and conditions must be accepted"),
+        .required("The terms and conditions must be accepted")
+        .oneOf([true], "The terms and conditions must be accepted"),
     }),
     validateOnMount: true,
     enableReinitialize: true,
   });
-  useEffect(() => {
+/*   useEffect(() => {
     axios
       .get("http://localhost:3001/users/1")
       .then((res) => setFormValues(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, []); */
   return (
     <form onSubmit={formik.handleSubmit}>
       <Input formik={formik} name="name" label="Name" />
@@ -105,18 +110,18 @@ const SignUpForm = () => {
         checkBoxOptions={checkBoxOptions}
         name="intrests"
       />
- <input
-          type="checkbox"
-          id="terms"
-          name="terms"
-          value={true}
-          onChange={formik.handleChange}
-          checked={formik.values.terms}
-        />
-        <label htmlFor="terms">Terms and Conditions</label>
-        {formik.errors.terms && formik.touched.terms && (
-          <div className="error">{formik.errors.terms}</div>
-        )}
+      <input
+        type="checkbox"
+        id="terms"
+        name="terms"
+        value={true}
+        onChange={formik.handleChange}
+        checked={formik.values.terms}
+      />
+      <label htmlFor="terms">Terms and Conditions</label>
+      {formik.errors.terms && formik.touched.terms && (
+        <div className="error">{formik.errors.terms}</div>
+      )}
       <button type="submit" disabled={!formik.isValid}>
         Submit
       </button>
