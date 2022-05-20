@@ -42,6 +42,7 @@ const SignUpForm = () => {
       gender: "",
       nationality: "",
       intrests: [],
+      terms: false,
     },
     onSubmit: (values) => console.log(values),
     validationSchema: Yup.object({
@@ -65,8 +66,11 @@ const SignUpForm = () => {
         .required("Password confirmation is required")
         .oneOf([Yup.ref("password"), null], "Password must maych"),
       gender: Yup.string().required("gender is required"),
-      nationality: Yup.string().required("Select nationality"),
       intrests: Yup.array().min(1).required("at least select one expertise"),
+      nationality: Yup.string().required("Select nationality"),
+      terms: Yup.boolean()
+      .required("The terms and conditions must be accepted")
+      .oneOf([true], "The terms and conditions must be accepted"),
     }),
     validateOnMount: true,
     enableReinitialize: true,
@@ -101,7 +105,18 @@ const SignUpForm = () => {
         checkBoxOptions={checkBoxOptions}
         name="intrests"
       />
-
+ <input
+          type="checkbox"
+          id="terms"
+          name="terms"
+          value={true}
+          onChange={formik.handleChange}
+          checked={formik.values.terms}
+        />
+        <label htmlFor="terms">Terms and Conditions</label>
+        {formik.errors.terms && formik.touched.terms && (
+          <div className="error">{formik.errors.terms}</div>
+        )}
       <button type="submit" disabled={!formik.isValid}>
         Submit
       </button>

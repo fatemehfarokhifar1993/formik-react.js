@@ -9,7 +9,8 @@
       "passwordConfirm": "Fatemeh12#",
       "gender": "1",
       "nationality":"IR",
-      "intrests": ["React.js"]
+      "intrests": ["React.js"],
+      "terms":false
     }
   ]
 }
